@@ -37,15 +37,7 @@ contract KlitsMinter is Ownable {
         // 35% to burn
         uint256 burn = price.mul(35).div(100);
         mix.burnFrom(msg.sender, burn);
-        mix.transferFrom(msg.sender, address(this), price.sub(burn));
+        mix.transferFrom(msg.sender, 0xC7728202e5c57B0A8C52f496Dc72Eda7C70677e5, price.sub(burn));
         limit = limit.sub(count);
-    }
-
-    function withdrawableMix() external view returns (uint256) {
-        return mix.balanceOf(address(this));
-    }
-
-    function withdrawMix() external onlyOwner {
-        mix.transfer(msg.sender, mix.balanceOf(address(this)));
     }
 }

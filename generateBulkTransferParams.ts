@@ -4,9 +4,9 @@ import fs from "fs";
 const tos: string[] = [];
 const ids: number[] = [];
 
-const start = 750;
+const start = 1750;
 SkyUtil.repeat(250, (index) => {
-    tos.push("0xC7728202e5c57B0A8C52f496Dc72Eda7C70677e5");
+    tos.push("0x8FFc61c21553D893BBA612F9895547B5B95A9AE1");
     ids.push(start + index);
 });
 

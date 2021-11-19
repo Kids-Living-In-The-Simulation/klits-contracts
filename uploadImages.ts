@@ -4,7 +4,7 @@ import parts from "./klits_parts.json";
 import KlitsContract from "./src/KlitsContract";
 
 (async () => {
-    for (let id = 4103; id < 10000; id += 1) {
+    for (let id = 0; id < 10000; id += 1) {
 
         let data = fs.readFileSync(`./klits_svg/kltsMate-${id}.svg`, "utf8").toString();
         data = data.replace(/ fill-opacity:1.000; stroke:none;/g, "");
@@ -14,8 +14,18 @@ import KlitsContract from "./src/KlitsContract";
         const result = optimize(data, { multipass: true });
         const optimizedSvgString = result.data.replace('width="25" height="25"', 'preserveAspectRatio="xMinYMin meet" viewBox="0 0 24 24"');
 
-        await KlitsContract.setImage(id, optimizedSvgString);
-        await KlitsContract.setAttributes(id, JSON.stringify((parts as any)[id].attributes));
+        const retry = async () => {
+            try {
+                if (id >= 4924) {
+                    await KlitsContract.setImage(id, optimizedSvgString);
+                }
+                await KlitsContract.setAttributes(id, JSON.stringify((parts as any)[id].attributes));
+            } catch (e) {
+                console.error(e);
+                await retry();
+            }
+        };
+        await retry();
         console.log(`#${id} Image Uploaded.`);
     }
 })();

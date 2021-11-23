@@ -3,7 +3,7 @@ import "dotenv/config";
 
 class Klaytn {
 
-    private caver = new Caver("https://api.dogesound.club:9013/");
+    private caver = new Caver("http://klaytn-node.klu.bs:9092");
     public walletAddress = process.env.PUBLIC_KEY;
 
     constructor() {
